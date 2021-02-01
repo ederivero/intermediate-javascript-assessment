@@ -5,49 +5,54 @@
 // * PROBLEM 1 *
 // *************
 
-// Below are two variables (firstUser and thirdUser).
+// Below are two variables (one and two).
 // Under the variables is a function called noWeakLink.
 // noWeakLink uses $http to make a "GET" request to /api/users.
 // You must use two .then functions to handle the response object.
 // Chain these functions off of $http (do not put them in variables)
 // The response object will look like this :
-/*
+/* 
     {
       data: [
         {
-      		email: "awilliams0@intel.com",
-      		first_name: "Alan",
-      		gender: "Male",
-      		id: 1,
-      		last_name: "Williams"
+		 email: "awilliams0@intel.com",
+		 first_name: "Alan",
+		 gender: "Male",
+		 id: 1,
+		 last_name: "Williams"
         },
-        {
-          //...
-        }
+        { //...
       ]
     }
 */
 
 // In the first .then function you use, assign the first user object (located in the response object)
-// to the variable 'firstUser' (previously declared), then return the response object.
+// to the variable 'firstUser' (previously declared).
 
 // In the second .then function you use, assign the third user object
 // to the variable 'thirdUser' (previously declared) and then return the tenth user object.
 
-var firstUser = 'don\'t touch this string!';
-var thirdUser = 'don\'t touch this string, either!';
+var firstUser = "don't touch this string!";
+var thirdUser = "don't touch this string, either!";
 
 function noWeakLink() {
-
-  return $http({
-    method: 'GET',
-    url: '/api/users'
+  var promise = $http({
+    method: "GET",
+    url: "/api/users",
   })
-  // CODE HERE...
+    // CODE HERE...
+    .then(function (response) {
+      console.log(response.data[0]);
+      firstUser = response.data[0];
+      // })
+      // .then(function (response) {
+      console.log(response.data[2]);
+      thirdUser = response.data[2];
+      return response.data[9];
+    });
 
+  return promise;
 }
-
-
 
 // *************
 // * PROBLEM 2 *
@@ -59,23 +64,21 @@ function noWeakLink() {
 // Function large currently returns the following:
 // 'My name is ' + this.name + ' and I am very heavy!'
 
-// You must use explicit binding.
-// In a variable called boundToElephant,
+// You must use explicit binding. In a variable called boundToElephant,
 // assign it the value of the large function BOUND to the elephant object.
 
 // When boundToElephant gets called, it should return this exact string:
 // 'My name is Horton and I am very heavy!' (The above instructions should make this work.  No code needed for this paragraph)
 
 var elephant = {
-  name: 'Horton'
-}
-function large() {
+  name: "Horton",
+};
 
-  return 'My name is ' + this.name + ' and I am very heavy!'
+function large() {
+  return "My name is " + this.name + " and I am very heavy!";
 }
 // CODE HERE...
-
-
+let boundToElephant = large.bind(elephant);
 
 // *************
 // * PROBLEM 3 *
@@ -84,12 +87,11 @@ function large() {
 // Write a function called deathStar.
 // deathStar will take in two parameters:
 // capacity (Function) and crew (object).
-// Use explicit binding to give capacity the context of crew
-// and return the bound function.
+// Use explicit binding to give capacity the context of crew and return the result.
 
-// CODE HERE...
-
-
+function deathStar(capacity, crew) {
+  return capacity.bind(crew);
+}
 
 // *************
 // * PROBLEM 4 *
@@ -100,11 +102,13 @@ function large() {
 // assets (Number),
 // then return a closure function:
 // The closure function will take in a parameter: liabilities (Number)
-// The closure function will return the combined value of assets and liabilities.
+// The closure function will returns the combined value of assets and liabilities.
 
-// CODE HERE...
-
-
+function accountingOffice(assets) {
+  return function (liabilities) {
+    return assets + liabilities;
+  };
+}
 
 // *************
 // * PROBLEM 5 *
@@ -127,9 +131,18 @@ function large() {
 //     remember: << array of items to be remembered >>
 // };
 
-// CODE HERE...
+var obj = {};
 
-
+function forgetter(name) {
+  return function rememberall(item) {
+    if (!obj[name]) obj[name] = [];
+    obj[name].push(item);
+    return {
+      name: name,
+      remember: obj[name],
+    };
+  };
+}
 
 // *************
 // * PROBLEM 6 *
@@ -156,3 +169,30 @@ function large() {
 // NOTE: Neither hunger nor danger should be able to exceed 100 or drop below 0.
 
 // CODE HERE...
+
+function frodo(startingHungerValue, startingDangerValue) {
+  var hunger = startingHungerValue;
+  var danger = startingDangerValue;
+  return {
+    dinnerOverFire: function () {
+      if (hunger >= 25) hunger -= 25;
+      else hunger = 0;
+      if (danger <= 60) danger += 40;
+      else danger = 100;
+      return {
+        hunger: hunger,
+        danger: danger,
+      };
+    },
+    hidingInBush: function () {
+      if (hunger <= 65) hunger += 35;
+      else hunger = 100;
+      if (danger >= 20) danger -= 20;
+      else danger = 0;
+      return {
+        hunger: hunger,
+        danger: danger,
+      };
+    },
+  };
+}

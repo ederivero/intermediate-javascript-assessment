@@ -12,9 +12,12 @@
 // with the animal as the context, and 'Trogdor' as a parameter.
 // return the result of your updateAnimal invocation
 
-// CODE HERE...
-
-
+function callBinding(magicAnimals, updateAnimal, id) {
+  for (var i = 0; i < magicAnimals.length; i++) {
+    if (magicAnimals[i].id === id) var index = i;
+  }
+  return updateAnimal.call(magicAnimals[index], "Trogdor");
+}
 
 // *************
 // * PROBLEM 2 *
@@ -27,9 +30,18 @@
 // with the context of the animal, and the array ['being majestic', 'eating rainbows'] as a parameter.
 // return the result of your updateAnimal invocation
 
-// CODE HERE...
+function applyBinding(magicAnimals, updateAnimal, id) {
+  // let index = magicAnimals.indexOf(id)
 
-
+  for (var i = 0; i < magicAnimals.length; i++) {
+    if (magicAnimals[i].id === id) var index = i;
+  }
+  console.log(magicAnimals[index], index, magicAnimals, id);
+  return updateAnimal.apply(magicAnimals[index], [
+    "being majestic",
+    "eating rainbows",
+  ]);
+}
 
 // *************
 // * PROBLEM 3 *
@@ -39,17 +51,20 @@
 // This function will take in 1 parameter:
 // $q (Custom promise object).
 // NOTE: $q is an injected library, that works like angular's $q object.
-// promiseMe will be invoked by a test and the test will expect a promise back.
+// promiseMe will be invoked by test and the test will expect a promise back.
 // In your function, create a custom promise, then create a timeout with a duration of 20 ms.
 // The timeout function should update the variable foo (seen below) to equal 'bar'.
-// After the timeout is completed, the promise should be resolved with the new updated foo variable.
+// After the timeout is completed, the promise should be resolved with the new update foo variable.
 // NOTE: Manually invoking your function here will alter the 'foo' variable before tests run, causing them to fail.
 
 var foo;
-
 // CODE HERE...
 
-
+const promiseMe = ($q) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve((foo = "bar")), 20);
+  });
+};
 
 // *************
 // * PROBLEM 4 *
@@ -64,3 +79,10 @@ var foo;
 // and then resolve the array as you complete your promise.
 
 // CODE HERE...
+
+const emailList = ($q, $http) => {
+  return $http({
+    method: "GET",
+    url: "/api/users",
+  }).then((res) => (arr = res.data.map((cur) => cur.email)));
+};

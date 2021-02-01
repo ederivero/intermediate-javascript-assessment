@@ -7,20 +7,20 @@
 
 // Given the following nested functions:
 
-function daBears(){
+function daBears() {
   var isFurry = true;
 
-  function papaBear (){
+  function papaBear() {
     var porridge = "Too Hot!";
     var chair = "Too Big!";
     var bed = "Too Hard!";
     var feeling = "Angry";
 
-    function mamaBear(){
+    function mamaBear() {
       var porridge = "Too Cold!";
       var bed = "Too Soft!";
 
-      function babyBear(){
+      function babyBear() {
         var porridge = "Just right!";
         var chair = "Just right!";
         var bed = "Just right!";
@@ -30,7 +30,7 @@ function daBears(){
     }
   }
 
-  function goldilocks(){
+  function goldilocks() {
     var feeling = "Hungry";
     var isFurry = false;
     var isDinner = true;
@@ -44,7 +44,6 @@ function daBears(){
 // (Delete wrong answers, leave correct ones)
 
 var fairyTale1 = ["papaBear", "mamaBear"];
-
 
 // Which function(s) access the "feeling" variable and get "Hungry"
 // (Delete wrong answers, leave correct ones)
@@ -66,7 +65,6 @@ var fairyTale4 = ["daBears", "papaBear", "mamaBear", "goldilocks"];
 
 var fairyTale5 = ["daBears", "papaBear", "mamaBear", "babyBear"];
 
-
 // *************
 // * PROBLEM 2 *
 // *************
@@ -84,12 +82,12 @@ var fairyTale5 = ["daBears", "papaBear", "mamaBear", "babyBear"];
 
 // CODE HERE...
 
-function Vehicle(){
+function Vehicle() {
   this.gasRemaining = 100;
 }
-Vehicle.prototype.drive = function(){
+Vehicle.prototype.drive = function () {
   this.gasRemaining = this.gasRemaining - 25;
-}
+};
 const charger = new Vehicle();
 charger.drive();
 const mustang = new Vehicle();
@@ -102,7 +100,6 @@ mustang.drive();
 // * PROBLEM 3 *
 // *************
 
-
 // For this problem, you will need to add a method to the String prototype named
 // "grammarPolice".  When called on a string, "grammarPolice" will return a new string
 //  where the first letter of every word is capitalized, while reverting the remainder
@@ -113,13 +110,19 @@ mustang.drive();
 // Your method may be passed punctuation, numbers or other non-letter characters
 // and should neither modify them nor break when encountering them.
 
-
-
-
 // CODE HERE...
 
-
-
+String.prototype.grammarPolice = function () {
+  var newArr = [];
+  var lowerCaseCharacters = this.toLowerCase().split(" ");
+  for (var i = 0; i < lowerCaseCharacters.length; i++) {
+    newArr.push(
+      lowerCaseCharacters[i].charAt(0).toUpperCase() +
+        lowerCaseCharacters[i].slice(1)
+    );
+  }
+  return newArr.join(" ");
+};
 // *************
 // * PROBLEM 4 *
 // *************
@@ -136,7 +139,15 @@ mustang.drive();
 
 // CODE HERE...
 
-
+function valueType(x, y) {
+  if (x === y) {
+    return "Exactly the same";
+  } else if (x == y) {
+    return "Same value, different types";
+  } else {
+    return "Different values";
+  }
+}
 
 // *************
 // * PROBLEM 5 *
@@ -150,3 +161,9 @@ mustang.drive();
 var theAnswer = "Unknown";
 
 // CODE HERE...
+
+function promiseCatcher(z) {
+  z.then(function (promise) {
+    this.theAnswer = promise;
+  });
+}
