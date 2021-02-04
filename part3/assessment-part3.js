@@ -13,7 +13,7 @@
 // return the result of your updateAnimal invocation
 
 function callBinding(magicAnimals, updateAnimal, id) {
-  for (var i = 0; i < magicAnimals.length; i++) {
+  for (let i = 0; i < magicAnimals.length; i++) {
     if (magicAnimals[i].id === id) var index = i;
   }
   return updateAnimal.call(magicAnimals[index], "Trogdor");
@@ -32,10 +32,12 @@ function callBinding(magicAnimals, updateAnimal, id) {
 
 function applyBinding(magicAnimals, updateAnimal, id) {
   // let index = magicAnimals.indexOf(id)
+  // use findIndex instead for
+  // for (let i = 0; i < magicAnimals.length; i++) {
+  //   if (magicAnimals[i].id === id) var index = i;
+  // }
+  let index = magicAnimals.findIndex((animal)=> animal.id === id);
 
-  for (var i = 0; i < magicAnimals.length; i++) {
-    if (magicAnimals[i].id === id) var index = i;
-  }
   console.log(magicAnimals[index], index, magicAnimals, id);
   return updateAnimal.apply(magicAnimals[index], [
     "being majestic",
